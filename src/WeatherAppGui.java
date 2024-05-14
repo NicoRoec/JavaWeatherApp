@@ -40,8 +40,7 @@ public class WeatherAppGui extends JFrame {
         add(searchTextField);
 
         // search button
-        JButton searchButton = new JButton(loadImage("src/assets/search.png"));
-
+        JButton searchButton = new JButton(loadImage("src/assets/search.png", 47, 45));
 
         //change cursor to hand cursor when hover
         searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -49,7 +48,7 @@ public class WeatherAppGui extends JFrame {
         add(searchButton);
 
         // weather image
-        JLabel weatherConditionImage = new JLabel(loadImage("src/assets/clear2.png"));
+        JLabel weatherConditionImage = new JLabel(loadImage("src/assets/clear2.png", 220, 220));
         weatherConditionImage.setBounds(0, 125, 450, 217);
         add(weatherConditionImage);
 
@@ -70,7 +69,7 @@ public class WeatherAppGui extends JFrame {
         add(weatherConditionDesc);
 
         // humidity img
-        JLabel humidityImage = new JLabel(loadImage("src/assets/humidity.png"));
+        JLabel humidityImage = new JLabel(loadImage("src/assets/humidity2.png", 74, 66));
         humidityImage.setBounds(15, 500, 74,66);
         add(humidityImage);
 
@@ -81,29 +80,35 @@ public class WeatherAppGui extends JFrame {
         add(humidityText);
 
         // wind speed
-        JLabel windSpeedImage = new JLabel(loadImage("src/assets/windspeed2.png"));
+        JLabel windSpeedImage = new JLabel(loadImage("src/assets/windspeed2.png", 74, 66));
         windSpeedImage.setBounds(220, 500, 74, 66);
         add(windSpeedImage);
-        
+
         // windspeed text
         JLabel windspeedText = new JLabel("<html><b>Windspeed</b> 15km/h</html>");
-        windspeedText.setBounds(310, 500, 85, 55);
+        windspeedText.setBounds(310, 500, 90, 55);
         windspeedText.setFont(new Font("Dialog", Font.PLAIN, 16));
         add(windspeedText);
     }
 
-    private ImageIcon loadImage(String resourcePath){
+    private ImageIcon loadImage(String resourcePath, int width, int height){
         try{
             // read Img file from given path
             BufferedImage image = ImageIO.read(new File(resourcePath));
 
+            // resize image to fit specified dimensions
+            Image resizedImg = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
             // returns image icon that component can read it
-            return new ImageIcon(image);
+            return new ImageIcon(resizedImg);
         }catch(IOException e){
             e.printStackTrace();
+            System.out.println("Resource konnte nicht gefunden werden.");
+            return null;
         }
+    }
 
-        System.out.println("Resource konnte nicht gefunden werden.");
-        return null;
+    public static void main(String[] args) {
+        new WeatherAppGui().setVisible(true);
     }
 }
