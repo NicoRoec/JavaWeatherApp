@@ -1,3 +1,5 @@
+package src;
+
 import javax.swing.*;
 
 public class AppLauncher {
@@ -7,6 +9,8 @@ public class AppLauncher {
             public void run(){
                 //display weather app gui
                 new WeatherAppGui().setVisible(true);
+
+//                System.out.println(WeatherApp.getLocationData("Tokyo"));
             }
         });
     }
