@@ -9,6 +9,9 @@ import org.json.simple.parser.JSONParser;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class WeatherApp {
@@ -23,7 +26,50 @@ public class WeatherApp {
         double longitude = (double) location.get("longitude");
 
         //build API request URL with location coordinates
-        String urlString = "";
+        String urlString = "https://api.open-meteo.com/v1/forecast?" +
+        "latitude=" + latitude + "&longitude=" + longitude +
+        "&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,rain,showers,snowfall,cloud_cover,wind_speed_10m,wind_direction_10m,wind_gusts_10m&hourly=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation_probability,precipitation,rain,showers,snowfall,snow_depth,cloud_cover,visibility,wind_speed_10m,wind_direction_80m,wind_gusts_10m,uv_index,uv_index_clear_sky,is_day,sunshine_duration&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset,uv_index_max,precipitation_sum,rain_sum,showers_sum,snowfall_sum,precipitation_hours,precipitation_probability_max,wind_speed_10m_max,wind_direction_10m_dominant&timezone=Europe%2FBerlin&past_days=31&models=best_match";
+
+        try{
+            // call api and get response
+            HttpURLConnection conn = fetchApiResponse(urlString);
+
+            // check for response status
+            // 200 - means that the connection was a success
+            if(conn.getResponseCode() != 200){
+                System.out.println("Error: Could not connect to API");
+                return null;
+            }
+
+            // store resulting json data
+            StringBuilder resultJson = new StringBuilder();
+            Scanner scanner = new Scanner(conn.getInputStream());
+            while(scanner.hasNext()){
+                // read and store into the string builder
+                resultJson.append(scanner.nextLine());
+            }
+
+            // close scanner
+            scanner.close();
+
+            // close url connection
+            conn.disconnect();
+
+            // parse through our data
+            JSONParser parser = new JSONParser();
+            JSONObject resultJsonObj = (JSONObject) parser.parse(String.valueOf(resultJson));
+
+            // retrieve hourly data
+            JSONObject hourly = (JSONObject) resultJsonObj.get("hourly");
+
+            // we want the current hour'S data
+            // so we need the index of current hour
+            JSONArray time = (JSONArray) hourly.get("time");
+            int index = findIndexOfCurrentTime(time);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
         return null;
     }
@@ -97,5 +143,24 @@ public class WeatherApp {
 
         // could not make connection
         return null;
+    }
+
+    private static int findIndexOfCurrentTime(JSONArray timeList){
+        String currentTime = getCurrentTime();
+
+        return 0;
+    }
+
+    public static String getCurrentTime(){
+        // get current date and time
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        // format date to be 2023-09-02T00:00 (This is how to read it in the API)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH':00'");
+
+        // format and print current date and time
+        String formattedDateTime = currentDateTime.format(formatter);
+
+        return formattedDateTime;
     }
 }
