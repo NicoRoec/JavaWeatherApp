@@ -1,6 +1,6 @@
 // retrieve weather data from API - this backend will fetch latest weather from API
 // GUI will display this data for the user
-//package src;
+package src;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

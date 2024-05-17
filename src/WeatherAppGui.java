@@ -1,3 +1,5 @@
+package src;
+
 import org.json.simple.JSONObject;
 
 import javax.imageio.ImageIO;
