@@ -33,6 +33,9 @@ public class WeatherAppGui extends JFrame {
         // prevent any resize of gui
         setResizable(false);
 
+        // set background color of the content pane
+        getContentPane().setBackground(Color.WHITE);
+
         addGuiComponents();
     }
 
@@ -40,16 +43,16 @@ public class WeatherAppGui extends JFrame {
         // search field
         JTextField searchTextField = new JTextField();
 
-        // set location and size of component
-        searchTextField.setBounds(15, 15, 351, 45);
+        // set location and size of search field
+        searchTextField.setBounds(80, 15, 280, 50);
 
-        // change font
+        // change font of search field
         searchTextField.setFont(new Font("Dialog", Font.PLAIN, 24));
         add(searchTextField);
 
         // weather image
-        JLabel weatherConditionImage = new JLabel(loadImage("src/assets/clear2.png", 220, 220));
-        weatherConditionImage.setBounds(0, 125, 450, 217);
+        JLabel weatherConditionImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/clear2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
+        weatherConditionImage.setBounds(0, 75, 450, 250);
         add(weatherConditionImage);
 
         // temperature text
@@ -62,40 +65,50 @@ public class WeatherAppGui extends JFrame {
         add(temperatureText);
 
         // weather condition description
-        JLabel weatherConditionDesc = new JLabel("Cloudy");
+        JLabel weatherConditionDesc = new JLabel("Clear");
         weatherConditionDesc.setBounds(0, 405, 450, 36);
         weatherConditionDesc.setFont(new Font("Dialog", Font.PLAIN, 32));
         weatherConditionDesc.setHorizontalAlignment(SwingConstants.CENTER);
         add(weatherConditionDesc);
 
         // humidity img
-        JLabel humidityImage = new JLabel(loadImage("src/assets/humidity2.png", 74, 66));
-        humidityImage.setBounds(15, 500, 74,66);
+        JLabel humidityImage = new JLabel(loadImage("src/assets/humidity2.png", 50, 50));
+        humidityImage.setBounds(15, 500, 50,50);
         add(humidityImage);
 
         // humidity text
         JLabel humidityText = new JLabel("<html><b>Humidity</b> 100%</html>");
-        humidityText.setBounds(90, 500, 85, 55);
+        humidityText.setBounds(70, 500, 80, 50);
         humidityText.setFont(new Font("Dialog", Font.PLAIN, 16));
         add(humidityText);
 
         // wind speed
-        JLabel windSpeedImage = new JLabel(loadImage("src/assets/windspeed2.png", 74, 66));
-        windSpeedImage.setBounds(220, 500, 74, 66);
+        JLabel windSpeedImage = new JLabel(loadImage("src/assets/windspeed2.png", 50, 50));
+        windSpeedImage.setBounds(170, 500, 50, 50);
         add(windSpeedImage);
 
         // windspeed text
         JLabel windspeedText = new JLabel("<html><b>Windspeed</b> 15km/h</html>");
-        windspeedText.setBounds(310, 500, 90, 55);
+        windspeedText.setBounds(230, 500, 90, 55);
         windspeedText.setFont(new Font("Dialog", Font.PLAIN, 16));
         add(windspeedText);
 
+        // chatbot img
+        JLabel chatbotImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/chatbot.gif").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
+        chatbotImage.setBounds(350, 500, 50, 50);
+        add(chatbotImage);
+
+        // next page
+        JLabel nextPageImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/swipe.gif").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
+        nextPageImage.setBounds(200, 560, 60, 60);
+        add(nextPageImage);
+
         // search button
-        JButton searchButton = new JButton(loadImage("src/assets/search.png", 47, 45));
+        JButton searchButton = new JButton(loadImage("src/assets/search.png", 40, 40));
 
         //change cursor to hand cursor when hover
         searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        searchButton.setBounds(375, 13, 47, 45);
+        searchButton.setBounds(351, 15, 50, 50);
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -116,18 +129,18 @@ public class WeatherAppGui extends JFrame {
                 String weatherCondition = (String) weatherData.get("weather_condition");
 
                 // depending on the condition, we will  update an img that corresponds with the condition
-                switch(weatherCondition){
+                switch (weatherCondition) {
                     case "Clear":
-                        weatherConditionImage.setIcon(loadImage("src/assets/clear2.png", 220, 220));
+                        weatherConditionImage.setIcon(new ImageIcon(new ImageIcon("src/assets/clear2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
                         break;
                     case "Cloudy":
-                        weatherConditionImage.setIcon(loadImage("src/assets/cloudy2.png", 220, 220));
+                        weatherConditionImage.setIcon(new ImageIcon(new ImageIcon("src/assets/cloudy2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
                         break;
                     case "Rain":
-                        weatherConditionImage.setIcon(loadImage("src/assets/rain2.png", 220, 220));
+                        weatherConditionImage.setIcon(new ImageIcon(new ImageIcon("src/assets/rain2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
                         break;
                     case "Snow":
-                        weatherConditionImage.setIcon(loadImage("src/assets/snow2.png", 220, 220));
+                        weatherConditionImage.setIcon(new ImageIcon(new ImageIcon("src/assets/snow2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
                         break;
                 }
 
