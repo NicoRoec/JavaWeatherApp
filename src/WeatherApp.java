@@ -208,17 +208,17 @@ public class WeatherApp {
         String weatherCondition = "";
         if(weathercode == 0L){
             // clear
-            weatherCondition = "Clear";
+            weatherCondition = "Sonnig";
         }else if(weathercode > 0L && weathercode <= 3L) {
             // cloudy
-            weatherCondition = "Cloudy";
+            weatherCondition = "Bewölkt";
         }else if((weathercode >= 51L && weathercode <= 67L)
                 || (weathercode >= 80L && weathercode <= 99L)){
             // rain
-            weatherCondition = "Rain";
+            weatherCondition = "Regen";
         }else if(weathercode >= 71L && weathercode <= 77L) {
             // snow
-            weatherCondition = "Snow";
+            weatherCondition = "Schnee";
         }
 
         return weatherCondition;

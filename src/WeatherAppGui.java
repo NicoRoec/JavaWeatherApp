@@ -1,12 +1,9 @@
-//package src;
-
 import org.json.simple.JSONObject;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
-import javax.swing.plaf.basic.BasicBorders;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +13,7 @@ import java.io.IOException;
 
 public class WeatherAppGui extends JFrame {
     private JSONObject weatherData;
+    private Font bebasFont;
 
     public WeatherAppGui(){
         // title
@@ -39,6 +37,15 @@ public class WeatherAppGui extends JFrame {
         // set background color of the content pane
         getContentPane().setBackground(Color.WHITE);
 
+        // Load Bebas Font
+        try {
+            bebasFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/fonts/BebasNeue-Regular.ttf")).deriveFont(32f);
+            GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(bebasFont); // Register the font
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace();
+            bebasFont = new Font("Dialog", Font.PLAIN, 32); // Fallback Font
+        }
+
         addGuiComponents();
     }
 
@@ -50,7 +57,7 @@ public class WeatherAppGui extends JFrame {
         searchTextField.setBounds(75, 15, 255, 35);
 
         // change font of search field
-        searchTextField.setFont(new Font("Dialog", Font.PLAIN, 18));
+        searchTextField.setFont(bebasFont.deriveFont(18f));
 
         // create a border for search field
         searchTextField.setBorder(BorderFactory.createCompoundBorder(
@@ -61,56 +68,56 @@ public class WeatherAppGui extends JFrame {
         add(searchTextField);
 
         // weather image
-        JLabel weatherConditionImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/clear2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
-        weatherConditionImage.setBounds(0, 75, 450, 250);
+        JLabel weatherConditionImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/earth.gif").getImage().getScaledInstance(310, 310, Image.SCALE_DEFAULT)));
+        weatherConditionImage.setBounds(0, 55, 450, 300);
         add(weatherConditionImage);
 
         // temperature text
-        JLabel temperatureText = new JLabel("10 °C");
+        JLabel temperatureText = new JLabel("");
         temperatureText.setBounds(0, 350, 450, 54);
-        temperatureText.setFont(new Font("Dialog", Font.BOLD, 48));
+        temperatureText.setFont(bebasFont.deriveFont(48f));
 
         // center text
         temperatureText.setHorizontalAlignment(SwingConstants.CENTER);
         add(temperatureText);
 
         // weather condition description
-        JLabel weatherConditionDesc = new JLabel("Clear");
+        JLabel weatherConditionDesc = new JLabel("");
         weatherConditionDesc.setBounds(0, 405, 450, 36);
-        weatherConditionDesc.setFont(new Font("Dialog", Font.PLAIN, 32));
+        weatherConditionDesc.setFont(bebasFont.deriveFont(32f));
         weatherConditionDesc.setHorizontalAlignment(SwingConstants.CENTER);
         add(weatherConditionDesc);
 
         // humidity img
         JLabel humidityImage = new JLabel(loadImage("src/assets/humidity2.png", 50, 50));
-        humidityImage.setBounds(15, 500, 50,50);
+        humidityImage.setBounds(40, 480, 50,50);
         add(humidityImage);
 
         // humidity text
-        JLabel humidityText = new JLabel("<html><b>Humidity</b> 100%</html>");
-        humidityText.setBounds(70, 500, 80, 50);
-        humidityText.setFont(new Font("Dialog", Font.PLAIN, 16));
+        JLabel humidityText = new JLabel("<html><b>Luftfeuchtigkeit</b><br> -</html>");
+        humidityText.setBounds(95, 480, 135, 50);
+        humidityText.setFont(bebasFont.deriveFont(16f)); // Set Bebas font for humidity text
         add(humidityText);
 
         // wind speed
         JLabel windSpeedImage = new JLabel(loadImage("src/assets/windspeed2.png", 50, 50));
-        windSpeedImage.setBounds(170, 500, 50, 50);
+        windSpeedImage.setBounds(275, 480, 50, 50);
         add(windSpeedImage);
 
         // windspeed text
-        JLabel windspeedText = new JLabel("<html><b>Windspeed</b> 15km/h</html>");
-        windspeedText.setBounds(230, 500, 90, 55);
-        windspeedText.setFont(new Font("Dialog", Font.PLAIN, 16));
+        JLabel windspeedText = new JLabel("<html><b>Windgeschw.</b><br> -</html>");
+        windspeedText.setBounds(335, 480, 120, 55);
+        windspeedText.setFont(bebasFont.deriveFont(16f)); // Set Bebas font for windspeed text
         add(windspeedText);
 
         // chatbot img
         JLabel chatbotImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/chatbot.gif").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
-        chatbotImage.setBounds(350, 500, 50, 50);
+        chatbotImage.setBounds(375, 545, 50, 50);
         add(chatbotImage);
 
         // next page
         JLabel nextPageImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/swipe.gif").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
-        nextPageImage.setBounds(200, 560, 60, 60);
+        nextPageImage.setBounds(200, 540, 60, 60);
         add(nextPageImage);
 
         // search button
@@ -144,16 +151,16 @@ public class WeatherAppGui extends JFrame {
 
                 // depending on the condition, we will  update an img that corresponds with the condition
                 switch (weatherCondition) {
-                    case "Clear":
+                    case "Sonnig":
                         weatherConditionImage.setIcon(new ImageIcon(new ImageIcon("src/assets/clear2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
                         break;
-                    case "Cloudy":
+                    case "Bewölkt":
                         weatherConditionImage.setIcon(new ImageIcon(new ImageIcon("src/assets/cloudy2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
                         break;
-                    case "Rain":
+                    case "Regen":
                         weatherConditionImage.setIcon(new ImageIcon(new ImageIcon("src/assets/rain2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
                         break;
-                    case "Snow":
+                    case "Schnee":
                         weatherConditionImage.setIcon(new ImageIcon(new ImageIcon("src/assets/snow2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
                         break;
                 }
@@ -167,11 +174,11 @@ public class WeatherAppGui extends JFrame {
 
                 // update humidity text
                 long humidity = (long) weatherData.get("humidity");
-                humidityText.setText("<html><b>Humidity</b><br>" + humidity + "%</html>");
+                humidityText.setText("<html><b>Luftfeuchtigkeit</b><br>" + humidity + "%</html>");
 
                 // update windspeed
                 double windspeed = (double) weatherData.get("windspeed");
-                windspeedText.setText("<html><b>Windspeed</b><br>" + windspeed + "km/h</html>");
+                windspeedText.setText("<html><b>Windgeschw.</b><br>" + windspeed + "km/h</html>");
             }
         });
         add(searchButton);
