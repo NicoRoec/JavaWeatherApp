@@ -9,6 +9,8 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -132,7 +134,8 @@ public class WeatherAppGui extends JFrame {
         Border searchButtonBorder = new MatteBorder(2, 0, 2, 2, Color.BLACK);
         searchButton.setBorder(searchButtonBorder);
 
-        searchButton.addActionListener(new ActionListener() {
+        // define the action to be performed
+        ActionListener searchAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // get location from user
@@ -187,7 +190,11 @@ public class WeatherAppGui extends JFrame {
                 double windspeed = (double) weatherData.get("windspeed");
                 windspeedText.setText("<html><b>Windgeschw.</b><br>" + windspeed + "km/h</html>");
             }
-        });
+        };
+
+        searchButton.addActionListener(searchAction);
+        searchTextField.addActionListener(searchAction);
+
         add(searchButton);
     }
 
