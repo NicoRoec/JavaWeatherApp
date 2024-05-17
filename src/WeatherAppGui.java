@@ -4,6 +4,9 @@ import org.json.simple.JSONObject;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.MatteBorder;
+import javax.swing.plaf.basic.BasicBorders;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -44,10 +47,17 @@ public class WeatherAppGui extends JFrame {
         JTextField searchTextField = new JTextField();
 
         // set location and size of search field
-        searchTextField.setBounds(80, 15, 280, 50);
+        searchTextField.setBounds(75, 15, 255, 35);
 
         // change font of search field
-        searchTextField.setFont(new Font("Dialog", Font.PLAIN, 24));
+        searchTextField.setFont(new Font("Dialog", Font.PLAIN, 18));
+
+        // create a border for search field
+        searchTextField.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(2, 2, 2, 0, Color.BLACK),
+                BorderFactory.createEmptyBorder(0, 7, 0, 0)
+        ));
+
         add(searchTextField);
 
         // weather image
@@ -104,11 +114,15 @@ public class WeatherAppGui extends JFrame {
         add(nextPageImage);
 
         // search button
-        JButton searchButton = new JButton(loadImage("src/assets/search.png", 40, 40));
+        JButton searchButton = new JButton(loadImage("src/assets/search.png", 25, 25));
 
         //change cursor to hand cursor when hover
         searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        searchButton.setBounds(351, 15, 50, 50);
+        searchButton.setBounds(330, 15, 45, 35);
+        // create a border for search button
+        Border searchButtonBorder = new MatteBorder(2, 0, 2, 2, Color.BLACK);
+        searchButton.setBorder(searchButtonBorder);
+
         searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
