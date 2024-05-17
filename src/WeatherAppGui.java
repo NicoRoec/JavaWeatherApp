@@ -150,22 +150,27 @@ public class WeatherAppGui extends JFrame {
 
                 // update weather img
                 String weatherCondition = (String) weatherData.get("weather_condition");
+                String dayOrNight = (String) weatherData.get("is_day"); // retrieve the day/night status
 
-                // depending on the condition, we will  update an img that corresponds with the condition
+                // depending on the condition and day/night, we will  update an img that corresponds with the condition
+                String imagePath = "";
                 switch (weatherCondition) {
-                    case "Sonnig":
-                        weatherConditionImage.setIcon(new ImageIcon(new ImageIcon("src/assets/clear2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
+                    case "Klarer Himmel":
+                        imagePath = dayOrNight.equals("Tag") ? "src/assets/clear2.gif" : "src/assets/clearNight.gif";
                         break;
                     case "Bewölkt":
-                        weatherConditionImage.setIcon(new ImageIcon(new ImageIcon("src/assets/cloudy2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
+                        imagePath = dayOrNight.equals("Tag") ? "src/assets/cloudy2.gif" : "src/assets/cloudyNight.gif";
                         break;
                     case "Regen":
-                        weatherConditionImage.setIcon(new ImageIcon(new ImageIcon("src/assets/rain2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
+                        imagePath = "src/assets/rain2.gif";
                         break;
                     case "Schnee":
-                        weatherConditionImage.setIcon(new ImageIcon(new ImageIcon("src/assets/snow2.gif").getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
+                        imagePath = "src/assets/snow2.gif";
                         break;
                 }
+
+                weatherConditionImage.setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
+
 
                 // update temperature text
                 double temperature = (double) weatherData.get("temperature");
