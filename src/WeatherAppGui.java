@@ -84,20 +84,30 @@ public class WeatherAppGui extends JFrame {
         add(searchTextField);
 
         // weather image
-        weatherConditionImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/earth.gif").getImage().getScaledInstance(310, 310, Image.SCALE_DEFAULT)));
+        ImageIcon earthIcon = new ImageIcon(new ImageIcon("src/assets/earth.gif").getImage().getScaledInstance(310, 310, Image.SCALE_DEFAULT));
+        earthIcon.setDescription("src/assets/earth.gif"); // Setzen der Beschreibung
+
+        weatherConditionImage = new JLabel(earthIcon);
         weatherConditionImage.setBounds(0, 55, 450, 300);
         weatherConditionImage.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Get user location and update search field
-                String city = getUserLocation();
-                if (city != null) {
-                    searchTextField.setText(city);
-                    searchButton.doClick(); // Trigger search action
+                // Überprüfen, ob das Bild earth.gif ist
+                ImageIcon icon = (ImageIcon) weatherConditionImage.getIcon();
+                String description = icon.getDescription();
+
+                if (description != null && description.equals("src/assets/earth.gif")) {
+                    // Get user location and update search field
+                    String city = getUserLocation();
+                    if (city != null) {
+                        searchTextField.setText(city);
+                        searchButton.doClick(); // Trigger search action
+                    }
                 }
             }
         });
         add(weatherConditionImage);
+
 
         // temperature text
         temperatureText = new JLabel("");
