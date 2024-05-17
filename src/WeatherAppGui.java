@@ -1,6 +1,7 @@
 package src;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,15 +10,26 @@ import javax.swing.border.MatteBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class WeatherAppGui extends JFrame {
     private JSONObject weatherData;
     private Font bebasFont;
+
+    private JTextField searchTextField;
+    private JLabel weatherConditionImage;
+    private JLabel temperatureText;
+    private JLabel weatherConditionDesc;
+    private JLabel humidityText;
+    private JLabel windspeedText;
+    private JButton searchButton;
 
     public WeatherAppGui(){
         // title
@@ -55,7 +67,7 @@ public class WeatherAppGui extends JFrame {
 
     private void addGuiComponents(){
         // search field
-        JTextField searchTextField = new JTextField();
+        searchTextField = new JTextField();
 
         // set location and size of search field
         searchTextField.setBounds(75, 15, 255, 35);
@@ -72,12 +84,23 @@ public class WeatherAppGui extends JFrame {
         add(searchTextField);
 
         // weather image
-        JLabel weatherConditionImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/earth.gif").getImage().getScaledInstance(310, 310, Image.SCALE_DEFAULT)));
+        weatherConditionImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/earth.gif").getImage().getScaledInstance(310, 310, Image.SCALE_DEFAULT)));
         weatherConditionImage.setBounds(0, 55, 450, 300);
+        weatherConditionImage.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Get user location and update search field
+                String city = getUserLocation();
+                if (city != null) {
+                    searchTextField.setText(city);
+                    searchButton.doClick(); // Trigger search action
+                }
+            }
+        });
         add(weatherConditionImage);
 
         // temperature text
-        JLabel temperatureText = new JLabel("");
+        temperatureText = new JLabel("");
         temperatureText.setBounds(0, 350, 450, 54);
         temperatureText.setFont(bebasFont.deriveFont(48f));
 
@@ -86,7 +109,7 @@ public class WeatherAppGui extends JFrame {
         add(temperatureText);
 
         // weather condition description
-        JLabel weatherConditionDesc = new JLabel("");
+        weatherConditionDesc = new JLabel("");
         weatherConditionDesc.setBounds(0, 405, 450, 36);
         weatherConditionDesc.setFont(bebasFont.deriveFont(32f));
         weatherConditionDesc.setHorizontalAlignment(SwingConstants.CENTER);
@@ -94,11 +117,11 @@ public class WeatherAppGui extends JFrame {
 
         // humidity img
         JLabel humidityImage = new JLabel(loadImage("src/assets/humidity2.png", 50, 50));
-        humidityImage.setBounds(40, 480, 50,50);
+        humidityImage.setBounds(40, 480, 50, 50);
         add(humidityImage);
 
         // humidity text
-        JLabel humidityText = new JLabel("<html><b>Luftfeuchtigkeit</b><br> -</html>");
+        humidityText = new JLabel("<html><b>Luftfeuchtigkeit</b><br> -</html>");
         humidityText.setBounds(95, 480, 135, 50);
         humidityText.setFont(bebasFont.deriveFont(16f)); // Set Bebas font for humidity text
         add(humidityText);
@@ -109,7 +132,7 @@ public class WeatherAppGui extends JFrame {
         add(windSpeedImage);
 
         // windspeed text
-        JLabel windspeedText = new JLabel("<html><b>Windgeschw.</b><br> -</html>");
+        windspeedText = new JLabel("<html><b>Windgeschw.</b><br> -</html>");
         windspeedText.setBounds(335, 480, 120, 55);
         windspeedText.setFont(bebasFont.deriveFont(16f)); // Set Bebas font for windspeed text
         add(windspeedText);
@@ -125,7 +148,7 @@ public class WeatherAppGui extends JFrame {
         add(nextPageImage);
 
         // search button
-        JButton searchButton = new JButton(loadImage("src/assets/search.png", 25, 25));
+        searchButton = new JButton(loadImage("src/assets/search.png", 25, 25));
 
         //change cursor to hand cursor when hover
         searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -142,7 +165,7 @@ public class WeatherAppGui extends JFrame {
                 String userInput = searchTextField.getText();
 
                 // validate input - remove white space to ensure non-empty text
-                if(userInput.replaceAll("//s", "").length() <= 0){
+                if(userInput.replaceAll("\\s", "").length() <= 0){
                     return;
                 }
 
@@ -155,7 +178,7 @@ public class WeatherAppGui extends JFrame {
                 String weatherCondition = (String) weatherData.get("weather_condition");
                 String dayOrNight = (String) weatherData.get("is_day"); // retrieve the day/night status
 
-                // depending on the condition and day/night, we will  update an img that corresponds with the condition
+                // depending on the condition and day/night, we will update an img that corresponds with the condition
                 String imagePath = "";
                 switch (weatherCondition) {
                     case "Klarer Himmel":
@@ -173,7 +196,6 @@ public class WeatherAppGui extends JFrame {
                 }
 
                 weatherConditionImage.setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
-
 
                 // update temperature text
                 double temperature = (double) weatherData.get("temperature");
@@ -213,6 +235,24 @@ public class WeatherAppGui extends JFrame {
             System.out.println("Resource konnte nicht gefunden werden.");
             return null;
         }
+    }
+
+    private String getUserLocation() {
+        try {
+            String apiUrl = "http://ip-api.com/json";
+            HttpURLConnection connection = (HttpURLConnection) new URL(apiUrl).openConnection();
+            connection.setRequestMethod("GET");
+            connection.connect();
+
+            if (connection.getResponseCode() == 200) {
+                InputStreamReader reader = new InputStreamReader(connection.getInputStream());
+                JSONObject response = (JSONObject) new JSONParser().parse(reader);
+                return (String) response.get("city");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static void main(String[] args) {
