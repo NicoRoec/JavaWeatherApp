@@ -1,4 +1,4 @@
-package src;
+//package src;
 
 import org.json.simple.JSONObject;
 
@@ -140,11 +140,11 @@ public class WeatherAppGui extends JFrame {
 
                 // update humidity text
                 long humidity = (long) weatherData.get("humidity");
-                humidityText.setText("<html><b>Humidity</b>" + humidity + "%</html>");
+                humidityText.setText("<html><b>Humidity</b><br>" + humidity + "%</html>");
 
                 // update windspeed
                 double windspeed = (double) weatherData.get("windspeed");
-                windspeedText.setText("<html><b>Windspeed</b>" + windspeed + "km/h</html>");
+                windspeedText.setText("<html><b>Windspeed</b><br>" + windspeed + "km/h</html>");
             }
         });
         add(searchButton);
