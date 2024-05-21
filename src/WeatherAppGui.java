@@ -150,7 +150,15 @@ public class WeatherAppGui extends JFrame {
         // chatbot img
         JLabel chatbotImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/chatbot.gif").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
         chatbotImage.setBounds(375, 545, 50, 50);
+        chatbotImage.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Öffne das Chatbot-Fenster
+                new WeatherChatBot().setVisible(true);
+            }
+        });
         add(chatbotImage);
+
 
         // next page
         JLabel nextPageImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/swipe.gif").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
