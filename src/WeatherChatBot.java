@@ -8,9 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class WeatherChatBot extends JFrame {
-    private JTextArea chatArea;
+    public JTextArea chatArea;
     private JTextField userInputField;
-    private JButton sendButton;
+    public JButton sendButton;
     private String[] questions = {
             "Wo befinden Sie sich gerade?",
             "Möchten Sie die aktuelle Temperatur wissen? (ja/nein)",
@@ -76,7 +76,7 @@ public class WeatherChatBot extends JFrame {
         }
     }
 
-    private void askQuestion() {
+    public void askQuestion() {
         if (questionIndex < questions.length) {
             chatArea.append("Bot: " + questions[questionIndex] + "\n");
         } else if (questionIndex == questions.length) {

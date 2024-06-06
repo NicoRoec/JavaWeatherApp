@@ -158,7 +158,7 @@ public class WeatherApp {
         return null;
     }
 
-    private static HttpURLConnection fetchApiResponse(String urlString){
+    public static HttpURLConnection fetchApiResponse(String urlString){
         try{
             // attempt to create connection
             URL url = new URL(urlString);
@@ -178,7 +178,7 @@ public class WeatherApp {
         return null;
     }
 
-    private static int findIndexOfCurrentTime(JSONArray timeList){
+    public static int findIndexOfCurrentTime(JSONArray timeList){
         String currentTime = getCurrentTime();
 
         // iterate through time list and see which one matches the current time
@@ -207,7 +207,7 @@ public class WeatherApp {
     }
 
     // convert weather code to something more readable
-    private static String convertWeatherCode(long weathercode){
+    public static String convertWeatherCode(long weathercode){
         String weatherCondition = "";
         if(weathercode == 0L){
             // clear
@@ -227,7 +227,7 @@ public class WeatherApp {
         return weatherCondition;
     }
 
-    private static String convertIsDayOrNight(long isDayOrNight){
+    public static String convertIsDayOrNight(long isDayOrNight){
         String isDay = "";
         if(isDayOrNight == 0){
             // night
