@@ -17,7 +17,7 @@ import java.util.Scanner;
  * Das Backend holt die neuesten Wetterdaten von der API und die GUI zeigt diese Daten dem Benutzer an.
  *
  * @author Nico Röcker
- * @version X.0 (wurde nachträglich eingefügt, daher ist Version unbekannt)
+ * @version 1.0
  *
  */
 public class WeatherApp {

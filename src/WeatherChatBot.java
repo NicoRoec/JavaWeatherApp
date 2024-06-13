@@ -12,7 +12,7 @@ import java.awt.event.ActionListener;
  * Basierend auf den Antworten des Benutzers werden entsprechende Wetterdaten abgerufen und angezeigt.
  *
  * @author Nico Röcker
- * @version X.0 (wurde nachträglich eingefügt, daher ist die genaue Version unbekannt)
+ * @version 1.0
  *
  */
 public class WeatherChatBot extends JFrame {

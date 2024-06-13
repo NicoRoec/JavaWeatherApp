@@ -24,7 +24,7 @@ import java.net.URL;
  * Sie zeigt die aktuellen Wetterdaten basierend auf der Benutzereingabe oder dem Standort des Benutzers an.
  *
  * @author Nico Röcker
- * @version X.0 (wurde nachträglich eingefügt, daher ist Version unbekannt)
+ * @version 1.0
  *
  */
 public class WeatherAppGui extends JFrame {

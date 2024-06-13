@@ -10,7 +10,7 @@ import javax.swing.*;
  * Die Klasse `TestWeatherChatBot` enthält Unit-Tests für die Klasse `WeatherChatBot`.
  *
  * @author Nico Röcker
- * @version X.0 (wurde nachträglich eingefügt, daher ist Version unbekannt)
+ * @version 1.0
  *
  */
 public class TestWeatherChatBot {

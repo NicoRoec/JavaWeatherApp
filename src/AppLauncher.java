@@ -7,7 +7,7 @@ import javax.swing.*;
  * Sie startet die grafische Benutzeroberfläche (GUI) der Anwendung.
  *
  * @author Nico Röcker
- * @version X.0 (wurde nachträglich eingefügt, daher ist Version unbekannt)
+ * @version 1.0
  *
  */
 public class AppLauncher {

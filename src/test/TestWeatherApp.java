@@ -12,7 +12,7 @@ import java.net.HttpURLConnection;
  * Die Klasse `TestWeatherApp` enthält Unit-Tests für die Methoden der Klasse `WeatherApp`.
  *
  * @author Nico Röcker
- * @version X.0 (wurde nachträglich eingefügt, daher ist Version unbekannt)
+ * @version 1.0
  *
  */
 public class TestWeatherApp {

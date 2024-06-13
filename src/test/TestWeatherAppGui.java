@@ -10,7 +10,7 @@ import javax.swing.*;
  * Die Klasse `TestWeatherAppGui` enthält Unit-Tests für die Klasse `WeatherAppGui`.
  *
  * @author Nico Röcker
- * @version X.0 (wurde nachträglich eingefügt, daher ist Version unbekannt)
+ * @version 1.0
  *
  */
 public class TestWeatherAppGui {

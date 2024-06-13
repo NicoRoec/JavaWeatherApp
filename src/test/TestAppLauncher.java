@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Die Klasse `TestAppLauncher` enthält Unit-Tests für die Klasse `AppLauncher`.
  *
  * @author Nico Röcker
- * @version X.0 (wurde nachträglich eingefügt, daher ist Version unbekannt)
+ * @version 1.0
  *
  */
 public class TestAppLauncher {

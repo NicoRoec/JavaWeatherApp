@@ -9,7 +9,7 @@ import org.junit.runner.notification.Failure;
  * Sie führt die Tests der Klassen `TestAppLauncher`, `TestWeatherApp`, `TestWeatherAppGui` und `TestWeatherChatBot` aus und gibt die Ergebnisse aus.
  *
  * @author Nico Röcker
- * @version X.0 (wurde nachträglich eingefügt, daher ist Version unbekannt)
+ * @version 1.0
  *
  */
 public class AllTestsRunner {
