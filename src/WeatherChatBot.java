@@ -7,6 +7,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Die Klasse `WeatherChatBot` stellt einen einfachen Chatbot dar, der den Benutzer nach seinem Standort und seinen Wetterinformationen fragt.
+ * Basierend auf den Antworten des Benutzers werden entsprechende Wetterdaten abgerufen und angezeigt.
+ *
+ * @author Nico Röcker
+ * @version X.0 (wurde nachträglich eingefügt, daher ist die genaue Version unbekannt)
+ *
+ */
 public class WeatherChatBot extends JFrame {
     public JTextArea chatArea;
     private JTextField userInputField;
@@ -22,14 +30,15 @@ public class WeatherChatBot extends JFrame {
     private int questionIndex = 0;
     private String userLocation = "";
 
+    /**
+     * Konstruktor für die WeatherChatBot-Klasse.
+     * Initialisiert das Chatbot-Fenster und seine Komponenten.
+     */
     public WeatherChatBot() {
-        // Fenster-Konfiguration
         setTitle("Weather ChatBot");
         setSize(400, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        // Layout
         setLayout(new BorderLayout());
 
         // Chat-Bereich
@@ -67,6 +76,9 @@ public class WeatherChatBot extends JFrame {
         askQuestion();
     }
 
+    /**
+     * Verarbeitet die Benutzereingabe und zeigt sie im Chatbereich an.
+     */
     private void handleUserInput() {
         String userInput = userInputField.getText().trim();
         if (!userInput.isEmpty()) {
@@ -76,6 +88,9 @@ public class WeatherChatBot extends JFrame {
         }
     }
 
+    /**
+     * Stellt die nächste Frage aus der Fragenliste.
+     */
     public void askQuestion() {
         if (questionIndex < questions.length) {
             chatArea.append("Bot: " + questions[questionIndex] + "\n");
@@ -84,6 +99,11 @@ public class WeatherChatBot extends JFrame {
         }
     }
 
+    /**
+     * Verarbeitet die Antwort des Benutzers auf die aktuelle Frage.
+     *
+     * @param userInput die Antwort des Benutzers
+     */
     private void processUserInput(String userInput) {
         if (questionIndex == 0) {
             userLocation = userInput;
@@ -125,9 +145,9 @@ public class WeatherChatBot extends JFrame {
         } else if (questionIndex == questions.length) {
             if (userInput.equalsIgnoreCase("ja")) {
                 chatArea.append("Bot: Chatbot wird geschlossen. Auf Wiedersehen!\n");
-                dispose(); // Fenster schließen
+                dispose();
             } else if (userInput.equalsIgnoreCase("nein")) {
-                questionIndex = 0; // Zurück zur ersten Frage
+                questionIndex = 0;
                 chatArea.append("Bot: Bitte geben Sie einen neuen Standort ein.\n");
                 askQuestion();
             } else {
@@ -136,6 +156,11 @@ public class WeatherChatBot extends JFrame {
         }
     }
 
+    /**
+     * Der Einstiegspunkt der Anwendung.
+     *
+     * @param args die Befehlszeilenargumente
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
