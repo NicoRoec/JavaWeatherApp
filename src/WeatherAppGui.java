@@ -221,6 +221,10 @@ public class WeatherAppGui extends JFrame {
 
     /**
      * Holt den Standort des Benutzers basierend auf seiner IP-Adresse.
+     * Hier ist zu beachten, dass die Kostenlose Standort API nicht genau funktioniert!
+     * In anderen Worten ist der angegebene Standort nicht genau der Standort des Nutzers.
+     * Um das Problem zu beheben, könnte man auf eine nicht kostenfreie API umsteigen.
+     * Doch darauf wollten wir mit unserem Studenten Lohn darauf verzichten.
      *
      * @return der Standort des Benutzers als String
      */
