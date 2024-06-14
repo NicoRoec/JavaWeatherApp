@@ -34,9 +34,9 @@ Dies ist eine Java-basierte Wetter-App, die aktuelle Wetterdaten für einen best
 ### GUI-Anwendung
 
 1. **Starten der Anwendung**:
-   - Führen Sie die Hauptklasse `AppLauncher` aus:
+   - Führen Sie die Hauptklasse `app.AppLauncher` aus:
      ```bash
-     mvn exec:java -Dexec.mainClass="AppLauncher"
+     mvn exec:java -Dexec.mainClass="app.AppLauncher"
      ```
    - Dies öffnet das Hauptfenster der Wetter-App-GUI, in dem Sie den Standort eingeben können, um Wetterdaten abzurufen.
 
@@ -53,9 +53,9 @@ Dies ist eine Java-basierte Wetter-App, die aktuelle Wetterdaten für einen best
 ### Chatbot-Anwendung
 
 1. **Starten des Chatbots**:
-   - Führen Sie die Hauptklasse `WeatherChatBot` aus:
+   - Führen Sie die Hauptklasse `app.WeatherChatBot` aus:
      ```bash
-     mvn exec:java -Dexec.mainClass="WeatherChatBot"
+     mvn exec:java -Dexec.mainClass="app.WeatherChatBot"
      ```
    - Dies öffnet das Chatbot-Fenster, in dem der Benutzer nach seinem Standort und den gewünschten Wetterinformationen gefragt wird.
 
