@@ -1,7 +1,7 @@
 package src.test;
 
 import org.junit.jupiter.api.Test;
-import src.AppLauncher;
+import src.main.java.AppLauncher;
 
 import static org.junit.jupiter.api.Assertions.*;
 

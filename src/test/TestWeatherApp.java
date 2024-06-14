@@ -3,7 +3,7 @@ package src.test;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
-import src.WeatherApp;
+import src.main.java.WeatherApp;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.net.HttpURLConnection;

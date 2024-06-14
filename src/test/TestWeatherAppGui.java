@@ -1,7 +1,7 @@
 package src.test;
 
 import org.junit.jupiter.api.Test;
-import src.WeatherAppGui;
+import src.main.java.WeatherAppGui;
 
 import static org.junit.jupiter.api.Assertions.*;
 import javax.swing.*;
@@ -11,7 +11,6 @@ import javax.swing.*;
  *
  * @author Nico Röcker
  * @version 1.0
- *
  */
 public class TestWeatherAppGui {
 
@@ -19,7 +18,6 @@ public class TestWeatherAppGui {
      * Testet die Initialisierung der `WeatherAppGui`-Klasse.
      * Überprüft, ob das GUI-Fenster korrekt initialisiert wurde.
      */
-    @org.junit.Test
     @Test
     public void testWeatherAppGuiInitialization() {
         WeatherAppGui gui = new WeatherAppGui();
