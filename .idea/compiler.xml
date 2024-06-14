@@ -9,8 +9,5 @@
         <module name="JavaWeatherApp" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="JavaWeatherApp" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
