@@ -49,6 +49,7 @@ Dies ist eine Java-basierte Wetter-App, die aktuelle Wetterdaten für einen best
     * Um das Problem zu beheben, könnte man auf eine nicht kostenfreie API umsteigen.
     * Doch darauf wollten wir mit unserem Studenten Lohn darauf verzichten.)
     und zeigt die entsprechenden Wetterdaten an.
+   -Außerdem wird zur Tageszeit eine Sonne und zur Nachtzeit ein Mond angezeigt. (z.B. Freiburg und Tokyo)
 
 ### Chatbot-Anwendung
 
@@ -58,6 +59,7 @@ Dies ist eine Java-basierte Wetter-App, die aktuelle Wetterdaten für einen best
      mvn exec:java -Dexec.mainClass="src.main.java.WeatherChatBot"
      ```
    - Dies öffnet das Chatbot-Fenster, in dem der Benutzer nach seinem Standort und den gewünschten Wetterinformationen gefragt wird.
+   - Eben so kann durch Klicken (Doppelklick) des Roboters unten Rechts der Chatbot geöffnet werden.
 
 2. **Chatbot-Bedienung**:
    - Geben Sie den Standort ein, wenn der Chatbot danach fragt.

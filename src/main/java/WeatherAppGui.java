@@ -54,7 +54,7 @@ public class WeatherAppGui extends JFrame {
 
         // Load Bebas Font
         try {
-            bebasFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/fonts/BebasNeue-Regular.ttf")).deriveFont(32f);
+            bebasFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/assets/fonts/BebasNeue-Regular.ttf")).deriveFont(32f);
             GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(bebasFont);
         } catch (IOException | FontFormatException e) {
             e.printStackTrace();
@@ -77,8 +77,8 @@ public class WeatherAppGui extends JFrame {
         ));
         add(searchTextField);
 
-        ImageIcon earthIcon = new ImageIcon(new ImageIcon("src/assets/earth.gif").getImage().getScaledInstance(310, 310, Image.SCALE_DEFAULT));
-        earthIcon.setDescription("src/assets/earth.gif");
+        ImageIcon earthIcon = new ImageIcon(new ImageIcon("src/main/resources/assets/gifs/earth.gif").getImage().getScaledInstance(310, 310, Image.SCALE_DEFAULT));
+        earthIcon.setDescription("src/main/resources/assets/gifs/earth.gif");
 
         weatherConditionImage = new JLabel(earthIcon);
         weatherConditionImage.setBounds(0, 55, 450, 300);
@@ -88,7 +88,7 @@ public class WeatherAppGui extends JFrame {
                 ImageIcon icon = (ImageIcon) weatherConditionImage.getIcon();
                 String description = icon.getDescription();
 
-                if (description != null && description.equals("src/assets/earth.gif")) {
+                if (description != null && description.equals("src/main/resources/assets/gifs/earth.gif")) {
                     String city = getUserLocation();
                     if (city != null) {
                         searchTextField.setText(city);
@@ -111,7 +111,7 @@ public class WeatherAppGui extends JFrame {
         weatherConditionDesc.setHorizontalAlignment(SwingConstants.CENTER);
         add(weatherConditionDesc);
 
-        JLabel humidityImage = new JLabel(loadImage("src/assets/humidity2.png", 50, 50));
+        JLabel humidityImage = new JLabel(loadImage("src/main/resources/assets/images/humidity2.png", 50, 50));
         humidityImage.setBounds(40, 480, 50, 50);
         add(humidityImage);
 
@@ -120,7 +120,7 @@ public class WeatherAppGui extends JFrame {
         humidityText.setFont(bebasFont.deriveFont(16f));
         add(humidityText);
 
-        JLabel windSpeedImage = new JLabel(loadImage("src/assets/windspeed2.png", 50, 50));
+        JLabel windSpeedImage = new JLabel(loadImage("src/main/resources/assets/images/windspeed2.png", 50, 50));
         windSpeedImage.setBounds(275, 480, 50, 50);
         add(windSpeedImage);
 
@@ -129,7 +129,7 @@ public class WeatherAppGui extends JFrame {
         windspeedText.setFont(bebasFont.deriveFont(16f));
         add(windspeedText);
 
-        JLabel chatbotImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/chatbot.gif").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
+        JLabel chatbotImage = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/assets/gifs/chatbot.gif").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
         chatbotImage.setBounds(375, 545, 50, 50);
         chatbotImage.addMouseListener(new MouseAdapter() {
             @Override
@@ -139,11 +139,11 @@ public class WeatherAppGui extends JFrame {
         });
         add(chatbotImage);
 
-        JLabel nextPageImage = new JLabel(new ImageIcon(new ImageIcon("src/assets/swipe.gif").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
+        JLabel nextPageImage = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/assets/gifs/swipe.gif").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
         nextPageImage.setBounds(200, 540, 60, 60);
         add(nextPageImage);
 
-        searchButton = new JButton(loadImage("src/assets/search.png", 25, 25));
+        searchButton = new JButton(loadImage("src/main/resources/assets/images/search.png", 25, 25));
         searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         searchButton.setBounds(330, 15, 45, 35);
         Border searchButtonBorder = new MatteBorder(2, 0, 2, 2, Color.BLACK);
@@ -165,16 +165,16 @@ public class WeatherAppGui extends JFrame {
                 String imagePath = "";
                 switch (weatherCondition) {
                     case "Klarer Himmel":
-                        imagePath = dayOrNight.equals("Tag") ? "src/assets/clear2.gif" : "src/assets/clearNight.gif";
+                        imagePath = dayOrNight.equals("Tag") ? "src/main/resources/assets/gifs/clear2.gif" : "src/main/resources/assets/gifs/clearNight.gif";
                         break;
                     case "Bewölkt":
-                        imagePath = dayOrNight.equals("Tag") ? "src/assets/cloudy2.gif" : "src/assets/cloudyNight.gif";
+                        imagePath = dayOrNight.equals("Tag") ? "src/main/resources/assets/gifs/cloudy2.gif" : "src/main/resources/assets/gifs/cloudyNight.gif";
                         break;
                     case "Regen":
-                        imagePath = "src/assets/rain2.gif";
+                        imagePath = "src/main/resources/assets/gifs/rain2.gif";
                         break;
                     case "Schnee":
-                        imagePath = "src/assets/snow2.gif";
+                        imagePath = "src/main/resources/assets/gifs/snow2.gif";
                         break;
                 }
 
