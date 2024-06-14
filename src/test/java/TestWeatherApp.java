@@ -1,13 +1,13 @@
+import app.WeatherApp;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
-import src.main.java.WeatherApp;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.net.HttpURLConnection;
 
 /**
- * Die Klasse `TestWeatherApp` enthält Unit-Tests für die Methoden der Klasse `WeatherApp`.
+ * Die Klasse `TestWeatherApp` enthält Unit-Tests für die Methoden der Klasse `app.WeatherApp`.
  *
  * @author Nico Röcker
  * @version 1.0
@@ -16,7 +16,7 @@ import java.net.HttpURLConnection;
 public class TestWeatherApp {
 
     /**
-     * Testet die Methode `getWeatherData` der Klasse `WeatherApp`.
+     * Testet die Methode `getWeatherData` der Klasse `app.WeatherApp`.
      * Überprüft, ob Wetterdaten erfolgreich abgerufen und alle erforderlichen Schlüssel vorhanden sind.
      */
     @org.junit.Test
@@ -33,7 +33,7 @@ public class TestWeatherApp {
     }
 
     /**
-     * Testet die Methode `getLocationData` der Klasse `WeatherApp`.
+     * Testet die Methode `getLocationData` der Klasse `app.WeatherApp`.
      * Überprüft, ob Standortdaten erfolgreich abgerufen und nicht leer sind.
      */
     @Test
@@ -45,7 +45,7 @@ public class TestWeatherApp {
     }
 
     /**
-     * Testet die Methode `fetchApiResponse` der Klasse `WeatherApp`.
+     * Testet die Methode `fetchApiResponse` der Klasse `app.WeatherApp`.
      * Überprüft, ob die API-Verbindung erfolgreich hergestellt und der Statuscode 200 zurückgegeben wird.
      */
     @Test
@@ -61,7 +61,7 @@ public class TestWeatherApp {
     }
 
     /**
-     * Testet die Methode `findIndexOfCurrentTime` der Klasse `WeatherApp`.
+     * Testet die Methode `findIndexOfCurrentTime` der Klasse `app.WeatherApp`.
      * Überprüft, ob der Index der aktuellen Zeit korrekt gefunden wird.
      */
     @Test
@@ -74,7 +74,7 @@ public class TestWeatherApp {
     }
 
     /**
-     * Testet die Methode `convertWeatherCode` der Klasse `WeatherApp`.
+     * Testet die Methode `convertWeatherCode` der Klasse `app.WeatherApp`.
      * Überprüft, ob Wettercodes korrekt in lesbare Wetterbedingungen umgewandelt werden.
      */
     @Test
@@ -86,7 +86,7 @@ public class TestWeatherApp {
     }
 
     /**
-     * Testet die Methode `convertIsDayOrNight` der Klasse `WeatherApp`.
+     * Testet die Methode `convertIsDayOrNight` der Klasse `app.WeatherApp`.
      * Überprüft, ob der Tag- oder Nachtstatus korrekt in lesbare Werte umgewandelt wird.
      */
     @Test
