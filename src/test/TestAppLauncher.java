@@ -1,7 +1,7 @@
 package src.test;
 
 import org.junit.jupiter.api.Test;
-import src.AppLauncher;
+import src.main.java.AppLauncher;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +18,6 @@ public class TestAppLauncher {
      * Testet die `main`-Methode der Klasse `AppLauncher`.
      * Überprüft, ob die Klasse `AppLauncher` erfolgreich gestartet und nicht null ist.
      */
-    @org.junit.Test
     @Test
     public void testMain() {
         AppLauncher.main(new String[]{});

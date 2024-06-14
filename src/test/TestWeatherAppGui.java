@@ -1,7 +1,7 @@
 package src.test;
 
 import org.junit.jupiter.api.Test;
-import src.WeatherAppGui;
+import src.main.java.WeatherAppGui;
 
 import static org.junit.jupiter.api.Assertions.*;
 import javax.swing.*;

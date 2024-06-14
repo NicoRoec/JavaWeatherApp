@@ -1,7 +1,7 @@
 package src.test;
 
 import org.junit.jupiter.api.Test;
-import src.WeatherChatBot;
+import src.main.java.WeatherChatBot;
 
 import static org.junit.jupiter.api.Assertions.*;
 import javax.swing.*;
