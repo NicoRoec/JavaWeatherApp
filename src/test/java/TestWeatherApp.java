@@ -3,8 +3,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import java.net.HttpURLConnection;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Die Klasse `TestWeatherApp` enthält Unit-Tests für die Methoden der Klasse `app.WeatherApp`.
@@ -19,7 +20,6 @@ public class TestWeatherApp {
      * Testet die Methode `getWeatherData` der Klasse `app.WeatherApp`.
      * Überprüft, ob Wetterdaten erfolgreich abgerufen und alle erforderlichen Schlüssel vorhanden sind.
      */
-    @org.junit.Test
     @Test
     public void testGetWeatherData() {
         String location = "Berlin";

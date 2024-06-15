@@ -1,8 +1,10 @@
 import app.WeatherAppGui;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import javax.swing.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Die Klasse `TestWeatherAppGui` enthält Unit-Tests für die Klasse `app.WeatherAppGui`.
@@ -17,7 +19,6 @@ public class TestWeatherAppGui {
      * Testet die Initialisierung der `app.WeatherAppGui`-Klasse.
      * Überprüft, ob das GUI-Fenster korrekt initialisiert wurde.
      */
-    @org.junit.Test
     @Test
     public void testWeatherAppGuiInitialization() {
         WeatherAppGui gui = new WeatherAppGui();

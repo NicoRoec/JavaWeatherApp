@@ -1,8 +1,9 @@
 import app.WeatherChatBot;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import javax.swing.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Die Klasse `TestWeatherChatBot` enthält Unit-Tests für die Klasse `app.WeatherChatBot`.
@@ -17,7 +18,6 @@ public class TestWeatherChatBot {
      * Testet die Initialisierung der `app.WeatherChatBot`-Klasse.
      * Überprüft, ob das Chatbot-Fenster korrekt initialisiert wurde.
      */
-    @org.junit.Test
     @Test
     public void testChatBotInitialization() {
         WeatherChatBot bot = new WeatherChatBot();
