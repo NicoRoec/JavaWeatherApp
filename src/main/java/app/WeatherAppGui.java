@@ -3,7 +3,6 @@ package app;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
@@ -12,82 +11,65 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-/**
- * Die Klasse `app.WeatherAppGui` stellt die grafische Benutzeroberfläche für die Wetteranwendung dar.
- * Sie zeigt die aktuellen Wetterdaten basierend auf der Benutzereingabe oder dem Standort des Benutzers an.
- *
- * @author Nico Röcker
- * @version 1.0
- *
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class WeatherAppGui extends JFrame {
-    private JSONObject weatherData;
     private Font bebasFont;
 
     public JTextField searchTextField;
     private JLabel weatherConditionImage;
-    public JLabel temperatureText;
-    public JLabel weatherConditionDesc;
-    public JLabel humidityText;
-    public JLabel windspeedText;
+    private JLabel temperatureText;
+    private JLabel weatherConditionDesc;
+    private JLabel humidityText;
+    private JLabel windspeedText;
     private JButton searchButton;
 
-    /**
-     * Konstruktor für die app.WeatherAppGui-Klasse.
-     * Initialisiert das GUI-Fenster und seine Komponenten.
-     */
-    public WeatherAppGui(){
-        super("THE Weather App");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(450, 650);
-        setLocationRelativeTo(null);
-        setLayout(null);
-        setResizable(false);
-        getContentPane().setBackground(Color.WHITE);
-
-        // Load Bebas Font
-        try {
-            bebasFont = Font.createFont(Font.TRUETYPE_FONT, new File("src/main/resources/assets/fonts/BebasNeue-Regular.ttf")).deriveFont(32f);
-            GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(bebasFont);
-        } catch (IOException | FontFormatException e) {
-            e.printStackTrace();
-            bebasFont = new Font("Dialog", Font.PLAIN, 32);
-        }
-
-        addGuiComponents();
+    public WeatherAppGui() {
+        loadFonts();
+        initializeComponents();
     }
 
-    /**
-     * Fügt die GUI-Komponenten zum Fenster hinzu und positioniert sie.
-     */
-    private void addGuiComponents(){
-        searchTextField = new JTextField();
-        searchTextField.setBounds(75, 15, 255, 35);
-        searchTextField.setFont(bebasFont.deriveFont(18f));
-        searchTextField.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createMatteBorder(2, 2, 2, 0, Color.BLACK),
-                BorderFactory.createEmptyBorder(0, 7, 0, 0)
-        ));
-        add(searchTextField);
+    private void loadFonts() {
+        try (InputStream fontStream = getClass().getClassLoader().getResourceAsStream("assets/fonts/BebasNeue-Regular.ttf")) {
+            if (fontStream != null) {
+                bebasFont = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(16f);
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(bebasFont);
+            } else {
+                System.err.println("Font file not found. Using default font.");
+                bebasFont = new Font("SansSerif", Font.PLAIN, 16);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            bebasFont = new Font("SansSerif", Font.PLAIN, 16);
+        }
+    }
 
-        ImageIcon earthIcon = new ImageIcon(new ImageIcon("src/main/resources/assets/gifs/earth.gif").getImage().getScaledInstance(310, 310, Image.SCALE_DEFAULT));
-        earthIcon.setDescription("src/main/resources/assets/gifs/earth.gif");
+    private void initializeComponents() {
+        setTitle("Weather App");
+        setSize(450, 650);  // Stellen Sie sicher, dass die Größe korrekt ist
+        setLayout(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setBackground(Color.WHITE);  // Setzen des Hintergrunds auf weiß
+        setResizable(false);  // Deaktivieren der Größenanpassung
+        setLocationRelativeTo(null);  // Fenster mittig auf dem Bildschirm öffnen
 
-        weatherConditionImage = new JLabel(earthIcon);
-        weatherConditionImage.setBounds(0, 55, 450, 300);
-        weatherConditionImage.addMouseListener(new MouseAdapter() {
+        List<WeatherComponent> components = new ArrayList<>();
+
+        WeatherComponent earthIconComponent = new WeatherImageComponent("assets/gifs/earth.gif", 310, 310, new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ImageIcon icon = (ImageIcon) weatherConditionImage.getIcon();
                 String description = icon.getDescription();
 
-                if (description != null && description.equals("src/main/resources/assets/gifs/earth.gif")) {
+                if (description != null && description.equals("assets/gifs/earth.gif")) {
                     String city = getUserLocation();
                     if (city != null) {
                         searchTextField.setText(city);
@@ -96,126 +78,74 @@ public class WeatherAppGui extends JFrame {
                 }
             }
         });
-        add(weatherConditionImage);
+        weatherConditionImage = earthIconComponent.getComponent();
+        weatherConditionImage.setBounds(0, 55, 450, 300);
+        components.add(earthIconComponent);
 
         temperatureText = new JLabel("");
-        temperatureText.setBounds(0, 350, 450, 54);
-        temperatureText.setFont(bebasFont.deriveFont(48f));
-        temperatureText.setHorizontalAlignment(SwingConstants.CENTER);
-        add(temperatureText);
+        WeatherComponent temperatureComponent = new WeatherTextComponent("", 0, 350, 450, 54, bebasFont.deriveFont(48f));
+        temperatureText = temperatureComponent.getComponent();
+        components.add(temperatureComponent);
 
         weatherConditionDesc = new JLabel("");
-        weatherConditionDesc.setBounds(0, 405, 450, 36);
-        weatherConditionDesc.setFont(bebasFont.deriveFont(32f));
-        weatherConditionDesc.setHorizontalAlignment(SwingConstants.CENTER);
-        add(weatherConditionDesc);
+        WeatherComponent conditionDescComponent = new WeatherTextComponent("", 0, 405, 450, 36, bebasFont.deriveFont(32f));
+        weatherConditionDesc = conditionDescComponent.getComponent();
+        components.add(conditionDescComponent);
 
-        JLabel humidityImage = new JLabel(loadImage("src/main/resources/assets/images/humidity2.png", 50, 50));
-        humidityImage.setBounds(40, 480, 50, 50);
-        add(humidityImage);
+        WeatherComponent humidityImageComponent = new WeatherImageComponent("assets/images/humidity2.png", 50, 50, null);
+        humidityImageComponent.getComponent().setBounds(20, 480, 50, 50);
+        components.add(humidityImageComponent);
 
         humidityText = new JLabel("<html><b>Luftfeuchtigkeit</b><br> -</html>");
-        humidityText.setBounds(95, 480, 135, 50);
-        humidityText.setFont(bebasFont.deriveFont(16f));
-        add(humidityText);
+        WeatherComponent humidityComponent = new WeatherTextComponent("<html><b>Luftfeuchtigkeit</b><br> -</html>", 75, 480, 135, 50, bebasFont.deriveFont(16f));
+        humidityText = humidityComponent.getComponent();
+        components.add(humidityComponent);
 
-        JLabel windSpeedImage = new JLabel(loadImage("src/main/resources/assets/images/windspeed2.png", 50, 50));
-        windSpeedImage.setBounds(275, 480, 50, 50);
-        add(windSpeedImage);
+        WeatherComponent windSpeedImageComponent = new WeatherImageComponent("assets/images/windspeed2.png", 50, 50, null);
+        windSpeedImageComponent.getComponent().setBounds(255, 480, 50, 50);
+        components.add(windSpeedImageComponent);
 
         windspeedText = new JLabel("<html><b>Windgeschw.</b><br> -</html>");
-        windspeedText.setBounds(335, 480, 120, 55);
-        windspeedText.setFont(bebasFont.deriveFont(16f));
-        add(windspeedText);
+        WeatherComponent windSpeedComponent = new WeatherTextComponent("<html><b>Windgeschw.</b><br> -</html>", 315, 480, 120, 55, bebasFont.deriveFont(16f));
+        windspeedText = windSpeedComponent.getComponent();
+        components.add(windSpeedComponent);
 
-        JLabel chatbotImage = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/assets/gifs/chatbot.gif").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
-        chatbotImage.setBounds(375, 545, 50, 50);
-        chatbotImage.addMouseListener(new MouseAdapter() {
+        WeatherComponent chatbotComponent = new WeatherImageComponent("assets/gifs/chatbot.gif", 60, 60, new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 new WeatherChatBot().setVisible(true);
             }
         });
-        add(chatbotImage);
+        chatbotComponent.getComponent().setBounds(190, 545, 50, 50);
+        components.add(chatbotComponent);
 
-        JLabel nextPageImage = new JLabel(new ImageIcon(new ImageIcon("src/main/resources/assets/gifs/swipe.gif").getImage().getScaledInstance(60, 60, Image.SCALE_DEFAULT)));
-        nextPageImage.setBounds(200, 540, 60, 60);
-        add(nextPageImage);
+        searchTextField = new JTextField();
+        searchTextField.setBounds(55, 15, 270, 35);
+        searchTextField.setFont(bebasFont.deriveFont(16f));
+        Border searchTextFieldBorder = new MatteBorder(2, 2, 2, 0, Color.BLACK);
+        searchTextField.setBorder(searchTextFieldBorder);
+        add(searchTextField);
 
-        searchButton = new JButton(loadImage("src/main/resources/assets/images/search.png", 25, 25));
+        searchButton = new JButton(new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource("assets/images/search.png")).getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT)));
         searchButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        searchButton.setBounds(330, 15, 45, 35);
+        searchButton.setBounds(325, 15, 45, 35);
         Border searchButtonBorder = new MatteBorder(2, 0, 2, 2, Color.BLACK);
         searchButton.setBorder(searchButtonBorder);
+        add(searchButton);
 
-        ActionListener searchAction = new ActionListener() {
+        searchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String userInput = searchTextField.getText();
-                if (userInput.replaceAll("\\s", "").length() <= 0) {
-                    return;
-                }
-
-                weatherData = WeatherApp.getWeatherData(userInput);
-
-                String weatherCondition = (String) weatherData.get("weather_condition");
-                String dayOrNight = (String) weatherData.get("is_day");
-
-                String imagePath = "";
-                switch (weatherCondition) {
-                    case "Klarer Himmel":
-                        imagePath = dayOrNight.equals("Tag") ? "src/main/resources/assets/gifs/clear2.gif" : "src/main/resources/assets/gifs/clearNight.gif";
-                        break;
-                    case "Bewölkt":
-                        imagePath = dayOrNight.equals("Tag") ? "src/main/resources/assets/gifs/cloudy2.gif" : "src/main/resources/assets/gifs/cloudyNight.gif";
-                        break;
-                    case "Regen":
-                        imagePath = "src/main/resources/assets/gifs/rain2.gif";
-                        break;
-                    case "Schnee":
-                        imagePath = "src/main/resources/assets/gifs/snow2.gif";
-                        break;
-                }
-
-                weatherConditionImage.setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(300, 300, Image.SCALE_DEFAULT)));
-
-                double temperature = (double) weatherData.get("temperature");
-                temperatureText.setText(temperature + "°C");
-
-                weatherConditionDesc.setText(weatherCondition);
-
-                long humidity = (long) weatherData.get("humidity");
-                humidityText.setText("<html><b>Luftfeuchtigkeit</b><br>" + humidity + "%</html>");
-
-                double windspeed = (double) weatherData.get("windspeed");
-                windspeedText.setText("<html><b>Windgeschw.</b><br>" + windspeed + "km/h</html>");
+                String city = searchTextField.getText();
+                updateWeatherData(city);
             }
-        };
+        });
 
-        searchButton.addActionListener(searchAction);
-        searchTextField.addActionListener(searchAction);
-
-        add(searchButton);
-    }
-
-    /**
-     * Lädt ein Bild aus dem angegebenen Pfad und skaliert es auf die gewünschte Größe.
-     *
-     * @param resourcePath der Pfad zur Bilddatei
-     * @param width die gewünschte Breite des Bildes
-     * @param height die gewünschte Höhe des Bildes
-     * @return das geladene und skalierte Bild als ImageIcon
-     */
-    private ImageIcon loadImage(String resourcePath, int width, int height){
-        try{
-            BufferedImage image = ImageIO.read(new File(resourcePath));
-            Image resizedImg = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            return new ImageIcon(resizedImg);
-        }catch(IOException e){
-            e.printStackTrace();
-            System.out.println("Resource konnte nicht gefunden werden.");
-            return null;
+        for (WeatherComponent component : components) {
+            add(component.getComponent());
         }
+
+        setVisible(true);
     }
 
     /**
@@ -245,12 +175,115 @@ public class WeatherAppGui extends JFrame {
         return null;
     }
 
+    private void updateWeatherData(String city) {
+        JSONObject weatherData = WeatherApp.getWeatherData(city);
+
+        if (weatherData != null) {
+            String temperature = String.format("%.1f°C", (double) weatherData.get("temperature"));
+            String condition = (String) weatherData.get("weather_condition");
+            String humidity = weatherData.get("humidity") + "%";
+            String windspeed = String.format("%.1f km/h", (double) weatherData.get("windspeed"));
+
+            temperatureText.setText(temperature);
+            weatherConditionDesc.setText(condition);
+            humidityText.setText("<html><b>Luftfeuchtigkeit</b><br>" + humidity + "</html>");
+            windspeedText.setText("<html><b>Windgeschw.</b><br>" + windspeed + "</html>");
+        } else {
+            temperatureText.setText("N/A");
+            weatherConditionDesc.setText("N/A");
+            humidityText.setText("<html><b>Luftfeuchtigkeit</b><br> N/A</html>");
+            windspeedText.setText("<html><b>Windgeschw.</b><br> N/A</html>");
+        }
+    }
+
+    private class WeatherImageComponent extends WeatherComponent {
+        private String imagePath;
+        private int width;
+        private int height;
+        private MouseAdapter mouseAdapter;
+
+        public WeatherImageComponent(String imagePath, int width, int height, MouseAdapter mouseAdapter) {
+            this.imagePath = imagePath;
+            this.width = width;
+            this.height = height;
+            this.mouseAdapter = mouseAdapter;
+            initialize();
+        }
+
+        @Override
+        public void initialize() {
+            try {
+                InputStream imageStream = getClass().getClassLoader().getResourceAsStream(imagePath);
+                if (imageStream == null) {
+                    throw new IOException("Image file not found: " + imagePath);
+                }
+                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+                int nRead;
+                byte[] data = new byte[1024];
+                while ((nRead = imageStream.read(data, 0, data.length)) != -1) {
+                    buffer.write(data, 0, nRead);
+                }
+                buffer.flush();
+                ImageIcon icon = new ImageIcon(new ImageIcon(buffer.toByteArray()).getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+                icon.setDescription(imagePath);
+                component = new JLabel(icon);
+                if (mouseAdapter != null) {
+                    component.addMouseListener(mouseAdapter);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private class WeatherTextComponent extends WeatherComponent {
+        private String text;
+        private int x;
+        private int y;
+        private int width;
+        private int height;
+        private Font font;
+
+        public WeatherTextComponent(String text, int x, int y, int width, int height, Font font) {
+            this.text = text;
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.font = font;
+            initialize();
+        }
+
+        @Override
+        public void initialize() {
+            component = new JLabel(text);
+            component.setBounds(x, y, width, height);
+            component.setFont(font);
+            component.setHorizontalAlignment(SwingConstants.CENTER);
+        }
+    }
+
+    private abstract class WeatherComponent {
+        protected JLabel component;
+
+        public abstract void initialize();
+
+        public JLabel getComponent() {
+            return component;
+        }
+    }
+
     /**
      * Der Einstiegspunkt der Anwendung.
      *
      * @param args die Befehlszeilenargumente
      */
     public static void main(String[] args) {
-        new WeatherAppGui().setVisible(true);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new WeatherAppGui().setVisible(true);
+            }
+        });
     }
 }

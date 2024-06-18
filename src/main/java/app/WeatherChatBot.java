@@ -6,15 +6,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
-/**
- * Die Klasse `app.WeatherChatBot` stellt einen einfachen Chatbot dar, der den Benutzer nach seinem Standort und seinen Wetterinformationen fragt.
- * Basierend auf den Antworten des Benutzers werden entsprechende Wetterdaten abgerufen und angezeigt.
- *
- * @author Nico Röcker
- * @version 1.0
- *
- */
 public class WeatherChatBot extends JFrame {
     public JTextArea chatArea;
     private JTextField userInputField;
@@ -36,10 +31,23 @@ public class WeatherChatBot extends JFrame {
      */
     public WeatherChatBot() {
         setTitle("Weather ChatBot");
-        setSize(400, 500);
+        setSize(400, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+        getContentPane().setBackground(Color.WHITE);
+        setResizable(false);
+
+        // Bild hinzufügen
+        JLabel chatbotImage = new JLabel();
+        chatbotImage.setHorizontalAlignment(SwingConstants.CENTER);
+        try {
+            ImageIcon icon = loadImage("assets/gifs/chatbot.gif", 60, 60);
+            chatbotImage.setIcon(icon);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        add(chatbotImage, BorderLayout.NORTH);
 
         // Chat-Bereich
         chatArea = new JTextArea();
@@ -154,6 +162,30 @@ public class WeatherChatBot extends JFrame {
                 chatArea.append("Bot: Bitte antworten Sie mit 'ja' oder 'nein'.\n");
             }
         }
+    }
+
+    /**
+     * Lädt ein Bild von den angegebenen Pfad und skaliert es.
+     *
+     * @param path  der Pfad zum Bild
+     * @param width  die Breite des Bildes
+     * @param height die Höhe des Bildes
+     * @return das skalierte ImageIcon
+     * @throws IOException wenn das Bild nicht gefunden werden kann
+     */
+    private ImageIcon loadImage(String path, int width, int height) throws IOException {
+        InputStream imageStream = getClass().getClassLoader().getResourceAsStream(path);
+        if (imageStream == null) {
+            throw new IOException("Image file not found: " + path);
+        }
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        int nRead;
+        byte[] data = new byte[1024];
+        while ((nRead = imageStream.read(data, 0, data.length)) != -1) {
+            buffer.write(data, 0, nRead);
+        }
+        buffer.flush();
+        return new ImageIcon(new ImageIcon(buffer.toByteArray()).getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
     }
 
     /**
