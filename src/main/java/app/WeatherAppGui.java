@@ -24,12 +24,12 @@ public class WeatherAppGui extends JFrame {
     private Font bebasFont;
 
     public JTextField searchTextField;
-    private JLabel weatherConditionImage;
-    private JLabel temperatureText;
-    private JLabel weatherConditionDesc;
-    private JLabel humidityText;
-    private JLabel windspeedText;
-    private JButton searchButton;
+    public JLabel weatherConditionImage;
+    public JLabel temperatureText;
+    public JLabel weatherConditionDesc;
+    public JLabel humidityText;
+    public JLabel windspeedText;
+    public JButton searchButton;
 
     public WeatherAppGui() {
         loadFonts();

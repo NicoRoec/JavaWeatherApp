@@ -12,7 +12,7 @@ import java.io.InputStream;
 
 public class WeatherChatBot extends JFrame {
     public JTextArea chatArea;
-    private JTextField userInputField;
+    public JTextField userInputField;
     public JButton sendButton;
     private String[] questions = {
             "Wo befinden Sie sich gerade?",
