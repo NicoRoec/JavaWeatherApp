@@ -20,6 +20,13 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Die Klasse `WeatherAppGui` stellt die grafische Benutzeroberfläche (GUI) für die Wetteranwendung dar.
+ * Sie ermöglicht es dem Benutzer, nach dem Wetter an einem bestimmten Ort zu suchen und die aktuellen Wetterdaten anzuzeigen.
+ *
+ * @author Nico
+ * @version 1
+ */
 public class WeatherAppGui extends JFrame {
     private Font bebasFont;
 
@@ -31,11 +38,17 @@ public class WeatherAppGui extends JFrame {
     public JLabel windspeedText;
     public JButton searchButton;
 
+    /**
+     * Konstruktor der Klasse `WeatherAppGui`. Lädt die Schriftarten und initialisiert die GUI-Komponenten.
+     */
     public WeatherAppGui() {
         loadFonts();
         initializeComponents();
     }
 
+    /**
+     * Lädt die benutzerdefinierten Schriftarten.
+     */
     private void loadFonts() {
         try (InputStream fontStream = getClass().getClassLoader().getResourceAsStream("assets/fonts/BebasNeue-Regular.ttf")) {
             if (fontStream != null) {
@@ -52,14 +65,17 @@ public class WeatherAppGui extends JFrame {
         }
     }
 
+    /**
+     * Initialisiert die GUI-Komponenten der Wetteranwendung.
+     */
     private void initializeComponents() {
         setTitle("Weather App");
-        setSize(450, 650);  // Stellen Sie sicher, dass die Größe korrekt ist
+        setSize(450, 650);
         setLayout(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getContentPane().setBackground(Color.WHITE);  // Setzen des Hintergrunds auf weiß
-        setResizable(false);  // Deaktivieren der Größenanpassung
-        setLocationRelativeTo(null);  // Fenster mittig auf dem Bildschirm öffnen
+        getContentPane().setBackground(Color.WHITE);
+        setResizable(false);
+        setLocationRelativeTo(null);
 
         List<WeatherComponent> components = new ArrayList<>();
 
@@ -153,7 +169,7 @@ public class WeatherAppGui extends JFrame {
      * Hier ist zu beachten, dass die Kostenlose Standort API nicht genau funktioniert!
      * In anderen Worten ist der angegebene Standort nicht genau der Standort des Nutzers.
      * Um das Problem zu beheben, könnte man auf eine nicht kostenfreie API umsteigen.
-     * Doch darauf wollten wir mit unserem Studenten Lohn darauf verzichten.
+     * Doch darauf wollte ich mit meinem Studenten Lohn darauf verzichten.
      *
      * @return der Standort des Benutzers als String
      */
@@ -175,6 +191,11 @@ public class WeatherAppGui extends JFrame {
         return null;
     }
 
+    /**
+     * Aktualisiert die Wetterdaten für eine gegebene Stadt und zeigt sie in der GUI an.
+     *
+     * @param city die Stadt, für die die Wetterdaten angezeigt werden sollen
+     */
     private void updateWeatherData(String city) {
         JSONObject weatherData = WeatherApp.getWeatherData(city);
 
@@ -202,6 +223,14 @@ public class WeatherAppGui extends JFrame {
         private int height;
         private MouseAdapter mouseAdapter;
 
+        /**
+         * Konstruktor für `WeatherImageComponent`.
+         *
+         * @param imagePath der Pfad zum Bild
+         * @param width die Breite des Bildes
+         * @param height die Höhe des Bildes
+         * @param mouseAdapter der MouseAdapter für das Bild
+         */
         public WeatherImageComponent(String imagePath, int width, int height, MouseAdapter mouseAdapter) {
             this.imagePath = imagePath;
             this.width = width;
@@ -244,6 +273,16 @@ public class WeatherAppGui extends JFrame {
         private int height;
         private Font font;
 
+        /**
+         * Konstruktor für `WeatherTextComponent`.
+         *
+         * @param text der Text, der angezeigt werden soll
+         * @param x die x-Koordinate des Textes
+         * @param y die y-Koordinate des Textes
+         * @param width die Breite des Textes
+         * @param height die Höhe des Textes
+         * @param font die Schriftart des Textes
+         */
         public WeatherTextComponent(String text, int x, int y, int width, int height, Font font) {
             this.text = text;
             this.x = x;
@@ -266,8 +305,16 @@ public class WeatherAppGui extends JFrame {
     private abstract class WeatherComponent {
         protected JLabel component;
 
+        /**
+         * Initialisiert die Komponente.
+         */
         public abstract void initialize();
 
+        /**
+         * Gibt die GUI-Komponente zurück.
+         *
+         * @return die GUI-Komponente
+         */
         public JLabel getComponent() {
             return component;
         }

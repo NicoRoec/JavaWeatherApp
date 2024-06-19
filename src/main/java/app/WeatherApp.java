@@ -12,12 +12,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 /**
- * Die Klasse `app.WeatherApp` bietet Methoden zum Abrufen und Verarbeiten von Wetterdaten aus einer API.
+ * Die Klasse `WeatherApp` bietet Methoden zum Abrufen und Verarbeiten von Wetterdaten aus einer API.
  * Das Backend holt die neuesten Wetterdaten von der API und die GUI zeigt diese Daten dem Benutzer an.
  *
- * @author Nico Röcker
- * @version 1.0
- *
+ * @author Nico
+ * @version 1
  */
 public class WeatherApp {
 

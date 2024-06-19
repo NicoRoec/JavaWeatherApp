@@ -53,7 +53,7 @@ Dies ist eine Java-basierte Wetter-App, die aktuelle Wetterdaten für einen best
     * Hier ist zu beachten, dass die Kostenlose Standort API nicht genau funktioniert!
     * In anderen Worten ist der angegebene Standort nicht genau der Standort des Nutzers.
     * Um das Problem zu beheben, könnte man auf eine nicht kostenfreie API umsteigen.
-    * Doch darauf wollten wir mit unserem Studenten Lohn darauf verzichten.)
+    * Doch darauf wollte ich mit meinem Studenten Lohn darauf verzichten.)
       und zeigt die entsprechenden Wetterdaten an.
       - Außerdem wird zur Tageszeit eine Sonne und zur Nachtzeit ein Mond angezeigt. (z.B. Freiburg und Tokyo)
 ```

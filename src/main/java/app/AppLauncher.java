@@ -3,12 +3,11 @@ package app;
 import javax.swing.*;
 
 /**
- * Die Klasse `app.AppLauncher` dient als Einstiegspunkt für die Wetteranwendung.
+ * Die Klasse `AppLauncher` dient als Einstiegspunkt für die Wetteranwendung.
  * Sie startet die grafische Benutzeroberfläche (GUI) der Anwendung.
  *
- * @author Nico Röcker
- * @version 1.0
- *
+ * @author Nico
+ * @version 1
  */
 public class AppLauncher {
     /**

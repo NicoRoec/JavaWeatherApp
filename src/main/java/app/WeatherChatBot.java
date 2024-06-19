@@ -10,6 +10,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Die Klasse `WeatherChatBot` stellt die grafische Benutzeroberfläche (GUI) für den Wetter-Chatbot dar.
+ * Der Chatbot interagiert mit dem Benutzer, um Wetterinformationen für einen bestimmten Ort abzurufen und anzuzeigen.
+ *
+ * @author Nico
+ * @version 1
+ */
 public class WeatherChatBot extends JFrame {
     public JTextArea chatArea;
     public JTextField userInputField;
@@ -26,7 +33,7 @@ public class WeatherChatBot extends JFrame {
     private String userLocation = "";
 
     /**
-     * Konstruktor für die app.WeatherChatBot-Klasse.
+     * Konstruktor für die `WeatherChatBot`-Klasse.
      * Initialisiert das Chatbot-Fenster und seine Komponenten.
      */
     public WeatherChatBot() {
