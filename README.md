@@ -47,15 +47,15 @@ Dies ist eine Java-basierte Wetter-App, die aktuelle Wetterdaten für einen best
     - Dies öffnet das Hauptfenster der Wetter-App-GUI, in dem Sie den Standort eingeben können, um Wetterdaten abzurufen.
 
 2. **Benutzeroberfläche**:
-    - Geben Sie den Namen der Stadt in das Suchfeld ein und klicken Sie auf den Suchbutton, um die aktuellen Wetterdaten für diesen Standort abzurufen.
+    - Geben Sie den Namen der Stadt in das Suchfeld ein und klicken Sie auf den Suchbutton oder drücken Sie Enter, um die aktuellen Wetterdaten für diesen Standort abzurufen.
     - Die Wetterinformationen werden im GUI-Fenster angezeigt.
-    - **Standortsuche**: Wenn Sie am Anfang auf das Globus-Symbol klicken, sucht die App automatisch nach Ihrem "aktuellen Standort" (
-    * Hier ist zu beachten, dass die Kostenlose Standort API nicht genau funktioniert!
-    * In anderen Worten ist der angegebene Standort nicht genau der Standort des Nutzers.
-    * Um das Problem zu beheben, könnte man auf eine nicht kostenfreie API umsteigen.
-    * Doch darauf wollte ich mit meinem Studenten Lohn darauf verzichten.)
-      und zeigt die entsprechenden Wetterdaten an.
-      - Außerdem wird zur Tageszeit eine Sonne und zur Nachtzeit ein Mond angezeigt. (z.B. Freiburg und Tokyo)
+   - **Standortsuche**: Wenn Sie am Anfang auf das Globus-Symbol klicken, sucht die App automatisch nach Ihrem "aktuellen Standort" (
+    Hier ist zu beachten, dass die Kostenlose Standort API nicht genau funktioniert!
+    In anderen Worten ist der angegebene Standort nicht genau der Standort des Nutzers.
+    Um das Problem zu beheben, könnte man auf eine nicht kostenfreie API umsteigen.
+    Doch darauf wollte ich mit meinem Studenten Lohn darauf verzichten.)
+       und zeigt die entsprechenden Wetterdaten an.
+   - Außerdem wird zur Tageszeit eine Sonne und zur Nachtzeit ein Mond angezeigt. (z.B. Freiburg und Tokyo)
 ```
 ```
 ### Chatbot-Anwendung
@@ -66,7 +66,7 @@ Dies ist eine Java-basierte Wetter-App, die aktuelle Wetterdaten für einen best
       mvn exec:java -Dexec.mainClass="app.WeatherChatBot"
       ```
     - Dies öffnet das Chatbot-Fenster, in dem der Benutzer nach seinem Standort und den gewünschten Wetterinformationen gefragt wird.
-    - Eben so kann durch Klicken (Doppelklick) des Roboters unten rechts der Chatbot geöffnet werden.
+    - Eben so kann durch Klicken des Roboters unten rechts der Chatbot geöffnet werden.
 
 2. **Chatbot-Bedienung**:
     - Geben Sie den Standort ein, wenn der Chatbot danach fragt.
@@ -96,11 +96,6 @@ Dies ist eine Java-basierte Wetter-App, die aktuelle Wetterdaten für einen best
 - **JSON Simple**: Bibliothek zum Parsen und Erzeugen von JSON-Daten
 - **JUnit**: Test-Framework für Java
 - **Maven**: Build-Management-Tool
-```
-```
-## Autoren
-
-- Nico Röcker
 ```
 ```
 ## Projektstruktur
@@ -310,8 +305,13 @@ Dies wird das Projekt kompilieren und alle Tests im Verzeichnis `src/test/java` 
 ```
 ## Fazit
 
-Alle Anforderungen für dieses Projekt wurden erfüllt, einschließlich der Erstellung eines UML-Klassendiagramms, der Einhaltung von Namenskonventionen, der Verwendung von Schleifen, bedingten Anweisungen, komplexen Datenstrukturen, Klassen, Zugriffskontrollen, Vererbung, abstrakten Klassen, Paketstrukturen, Exception Handling, Javadoc-Dokumentation, Unit-Tests, Build-Tools und externen Java-Bibliotheken. Das Projekt ist gut strukturiert und folgt den Best Practices der Java-Entwicklung.
+Alle Anforderungen für dieses Projekt wurden erfüllt, einschließlich der Erstellung eines UML-Klassendiagramms, der Einhaltung von Namenskonventionen, der Verwendung von Schleifen, bedingten Anweisungen, komplexen Datenstrukturen, Klassen, Zugriffskontrollen, Vererbung, abstrakten Klassen, Paketstrukturen, Exception Handling, Javadoc-Dokumentation, Unit-Tests, Build-Tools und externen Java-Bibliotheken.
 
 Es ist erwähnenswert, dass wenn Timo Völker und Brandon Evans an diesem Projekt mitgewirkt hätten, wir möglicherweise einen verbesserten Chatbot mit KI-Fähigkeiten sowie eine zusätzliche Seite mit Wettervorhersagen, Statistiken und weiteren Informationen hätten implementieren können. Leider war dies in dieser Iteration nicht umsetzbar. Dennoch bin ich mit dem erreichten Ergebnis zufrieden und hoffe, dass es Ihren Erwartungen entspricht.
+```
+```
+## Autoren
+
+- Nico Röcker
 ```
 ```
