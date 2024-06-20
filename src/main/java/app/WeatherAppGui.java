@@ -157,12 +157,21 @@ public class WeatherAppGui extends JFrame {
             }
         });
 
+        searchTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                    searchButton.doClick();
+                }
+            }
+        });
+
         for (WeatherComponent component : components) {
             add(component.getComponent());
         }
 
         setVisible(true);
     }
+
 
     /**
      * Holt den Standort des Benutzers basierend auf seiner IP-Adresse.
