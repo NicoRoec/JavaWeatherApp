@@ -1,4 +1,7 @@
-/Users/nico/projects/JavaWeatherApp/src/test/java/TestWeatherApp.java
-/Users/nico/projects/JavaWeatherApp/src/test/java/TestWeatherChatBot.java
-/Users/nico/projects/JavaWeatherApp/src/test/java/TestAppLauncher.java
-/Users/nico/projects/JavaWeatherApp/src/test/java/TestWeatherAppGui.java
+/Users/nico/projects/JavaWeatherApp/src/test/java/WeatherTextComponentTest.java
+/Users/nico/projects/JavaWeatherApp/src/test/java/AppLauncherTest.java
+/Users/nico/projects/JavaWeatherApp/src/test/java/WeatherImageComponentTest.java
+/Users/nico/projects/JavaWeatherApp/src/test/java/WeatherAppTest.java
+/Users/nico/projects/JavaWeatherApp/src/test/java/WeatherAppGuiTest.java
+/Users/nico/projects/JavaWeatherApp/src/test/java/WeatherChatBotTest.java
+/Users/nico/projects/JavaWeatherApp/src/test/java/WeatherComponentTest.java

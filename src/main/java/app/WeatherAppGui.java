@@ -79,7 +79,7 @@ public class WeatherAppGui extends JFrame {
 
         List<WeatherComponent> components = new ArrayList<>();
 
-        WeatherComponent earthIconComponent = new WeatherImageComponent("assets/gifs/earth.gif", 310, 310, new MouseAdapter() {
+        WeatherComponent earthIconComponent = new WeatherImageComponent("assets/gifs/earth.gif", 200, 200, new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 ImageIcon icon = (ImageIcon) weatherConditionImage.getIcon();
@@ -95,34 +95,34 @@ public class WeatherAppGui extends JFrame {
             }
         });
         weatherConditionImage = earthIconComponent.getComponent();
-        weatherConditionImage.setBounds(0, 55, 450, 300);
+        weatherConditionImage.setBounds(0, 55, 450, 200);
         components.add(earthIconComponent);
 
         temperatureText = new JLabel("");
-        WeatherComponent temperatureComponent = new WeatherTextComponent("", 0, 350, 450, 54, bebasFont.deriveFont(48f));
+        WeatherComponent temperatureComponent = new WeatherTextComponent("", 0, 270, 450, 54, bebasFont.deriveFont(48f));
         temperatureText = temperatureComponent.getComponent();
         components.add(temperatureComponent);
 
         weatherConditionDesc = new JLabel("");
-        WeatherComponent conditionDescComponent = new WeatherTextComponent("", 0, 405, 450, 36, bebasFont.deriveFont(32f));
+        WeatherComponent conditionDescComponent = new WeatherTextComponent("", 0, 325, 450, 36, bebasFont.deriveFont(32f));
         weatherConditionDesc = conditionDescComponent.getComponent();
         components.add(conditionDescComponent);
 
         WeatherComponent humidityImageComponent = new WeatherImageComponent("assets/images/humidity2.png", 50, 50, null);
-        humidityImageComponent.getComponent().setBounds(20, 480, 50, 50);
+        humidityImageComponent.getComponent().setBounds(20, 400, 50, 50);
         components.add(humidityImageComponent);
 
         humidityText = new JLabel("<html><b>Luftfeuchtigkeit</b><br> -</html>");
-        WeatherComponent humidityComponent = new WeatherTextComponent("<html><b>Luftfeuchtigkeit</b><br> -</html>", 75, 480, 135, 50, bebasFont.deriveFont(16f));
+        WeatherComponent humidityComponent = new WeatherTextComponent("<html><b>Luftfeuchtigkeit</b><br> -</html>", 75, 400, 135, 50, bebasFont.deriveFont(16f));
         humidityText = humidityComponent.getComponent();
         components.add(humidityComponent);
 
         WeatherComponent windSpeedImageComponent = new WeatherImageComponent("assets/images/windspeed2.png", 50, 50, null);
-        windSpeedImageComponent.getComponent().setBounds(255, 480, 50, 50);
+        windSpeedImageComponent.getComponent().setBounds(255, 400, 50, 50);
         components.add(windSpeedImageComponent);
 
         windspeedText = new JLabel("<html><b>Windgeschw.</b><br> -</html>");
-        WeatherComponent windSpeedComponent = new WeatherTextComponent("<html><b>Windgeschw.</b><br> -</html>", 315, 480, 120, 55, bebasFont.deriveFont(16f));
+        WeatherComponent windSpeedComponent = new WeatherTextComponent("<html><b>Windgeschw.</b><br> -</html>", 315, 400, 120, 55, bebasFont.deriveFont(16f));
         windspeedText = windSpeedComponent.getComponent();
         components.add(windSpeedComponent);
 
@@ -132,7 +132,7 @@ public class WeatherAppGui extends JFrame {
                 new WeatherChatBot().setVisible(true);
             }
         });
-        chatbotComponent.getComponent().setBounds(190, 545, 50, 50);
+        chatbotComponent.getComponent().setBounds(190, 500, 50, 50);
         components.add(chatbotComponent);
 
         searchTextField = new JTextField();
@@ -149,21 +149,16 @@ public class WeatherAppGui extends JFrame {
         searchButton.setBorder(searchButtonBorder);
         add(searchButton);
 
-        searchButton.addActionListener(new ActionListener() {
+        ActionListener searchAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String city = searchTextField.getText();
                 updateWeatherData(city);
             }
-        });
+        };
 
-        searchTextField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                if (evt.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                    searchButton.doClick();
-                }
-            }
-        });
+        searchButton.addActionListener(searchAction);
+        searchTextField.addActionListener(searchAction);
 
         for (WeatherComponent component : components) {
             add(component.getComponent());
@@ -172,13 +167,12 @@ public class WeatherAppGui extends JFrame {
         setVisible(true);
     }
 
-
     /**
      * Holt den Standort des Benutzers basierend auf seiner IP-Adresse.
      * Hier ist zu beachten, dass die Kostenlose Standort API nicht genau funktioniert!
      * In anderen Worten ist der angegebene Standort nicht genau der Standort des Nutzers.
      * Um das Problem zu beheben, könnte man auf eine nicht kostenfreie API umsteigen.
-     * Doch darauf wollte ich mit meinem Studenten Lohn darauf verzichten.
+     * Doch darauf wollten wir mit unserem Studenten Lohn darauf verzichten.
      *
      * @return der Standort des Benutzers als String
      */
@@ -213,17 +207,59 @@ public class WeatherAppGui extends JFrame {
             String condition = (String) weatherData.get("weather_condition");
             String humidity = weatherData.get("humidity") + "%";
             String windspeed = String.format("%.1f km/h", (double) weatherData.get("windspeed"));
+            String dayOrNight = (String) weatherData.get("is_day");
 
             temperatureText.setText(temperature);
             weatherConditionDesc.setText(condition);
             humidityText.setText("<html><b>Luftfeuchtigkeit</b><br>" + humidity + "</html>");
             windspeedText.setText("<html><b>Windgeschw.</b><br>" + windspeed + "</html>");
+
+            String imagePath = getWeatherImagePath(dayOrNight, condition);
+            weatherConditionImage.setIcon(new ImageIcon(new ImageIcon(getClass().getClassLoader().getResource(imagePath)).getImage().getScaledInstance(200, 200, Image.SCALE_DEFAULT)));
         } else {
             temperatureText.setText("N/A");
             weatherConditionDesc.setText("N/A");
             humidityText.setText("<html><b>Luftfeuchtigkeit</b><br> N/A</html>");
             windspeedText.setText("<html><b>Windgeschw.</b><br> N/A</html>");
         }
+    }
+
+    /**
+     * Gibt den Pfad zum Bild basierend auf dem Wetterzustand und der Tageszeit zurück.
+     *
+     * @param dayOrNight der Tag- oder Nachtstatus
+     * @param condition der Wetterzustand
+     * @return der Pfad zum Bild
+     */
+    private String getWeatherImagePath(String dayOrNight, String condition) {
+        if ("Tag".equals(dayOrNight)) {
+            switch (condition) {
+                case "Klarer Himmel":
+                    return "assets/gifs/clear2.gif";
+                case "Bewölkt":
+                    return "assets/gifs/cloudy2.gif";
+                case "Regen":
+                    return "assets/gifs/rain2.gif";
+                case "Schnee":
+                    return "assets/gifs/snow2.gif";
+                default:
+                    return "assets/gifs/earth.gif";
+            }
+        } else if ("Nacht".equals(dayOrNight)) {
+            switch (condition) {
+                case "Klarer Himmel":
+                    return "assets/gifs/clearNight.gif";
+                case "Bewölkt":
+                    return "assets/gifs/cloudyNight.gif";
+                case "Regen":
+                    return "assets/gifs/rain2.gif";
+                case "Schnee":
+                    return "assets/gifs/snow2.gif";
+                default:
+                    return "assets/gifs/earth.gif";
+            }
+        }
+        return "assets/gifs/earth.gif";
     }
 
     private class WeatherImageComponent extends WeatherComponent {
